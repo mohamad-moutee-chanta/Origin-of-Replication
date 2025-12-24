@@ -1,0 +1,87 @@
+# NOTE: Please enter your integres using double quotes annotation ("ATAATCGGCTAGCGT", "ACGC" etc.)
+
+# Given a specific pattern like "GTC" Count how many of the pattern exists in the sequence 
+def PatternCounts(seq, pattern):
+    seq = str(seq)
+    pattern = str(pattern)
+    count = 0
+    it = len(pattern)
+
+    for i in range(0, len(seq) - it + 1):
+        if seq[i:i+it] == pattern:
+            count += 1
+    return count
+
+# Identify and return the maximum count of the most frequent k-mers in a list 
+def max_frequent(slices):
+        max_count = 0
+        frequent = []
+
+        for kmer in set(slices):
+            count = slices.count(kmer)
+
+            if count > max_count:
+                max_count = count
+                frequent = [kmer]
+            elif count == max_count:
+                frequent.append(kmer)
+
+        return frequent, max_count
+
+# Given a k value find the most frequent k-mer in a sequence
+def Pattern_k_mer(seq, k):
+    slices = [seq[i:i+k] for i in range(0, len(seq) - k + 1)]
+
+    def max_frequent(slices):
+        max_count = 0
+        frequent = []
+
+        for kmer in set(slices):
+            count = slices.count(kmer)
+
+            if count > max_count:
+                max_count = count
+                frequent = [kmer]
+            elif count == max_count:
+                frequent.append(kmer)
+
+        return frequent, max_count
+
+    return max_frequent(slices)
+
+# Find all the starting indexes of a spesific pattern inside a sequence 
+index_list = []
+def starting_index_finder(seq, pattern):
+    splices = [seq[i:i+len(pattern)] for i in range(0,len(seq)-len(pattern)+1)]
+    index_list = ([i for i, n in enumerate(splices) if n == pattern])
+    for i in index_list:
+        print(i, sep=" ",end = " ")
+
+# Find all the k-mers that appears atleast t times within any window of length L in the sequence
+def replicatio(seq, k, L, t):
+    count = {}
+    frequency = set()
+    
+    firstwindow = seq[0:L]
+    for i in range(len(firstwindow)-k+1):
+        pattern = firstwindow[i:i+k]
+
+        if pattern in count:
+            count[pattern] += 1
+        else:
+            count[pattern] = 1
+        if count[pattern] >= t:
+            frequency.add(pattern)
+
+    for i in range(1,len(seq) - L + 1):
+        left_leaving = seq[i-1 : i-1+k]
+        count[left_leaving] -= 1
+
+        right_entering = seq[i+L-k : i+L]
+        if right_entering in count:
+            count[right_entering] += 1
+        else:
+            count[right_entering] = 1
+        if count[right_entering] >= t:
+            frequency.add(right_entering)
+    return(frequency)
