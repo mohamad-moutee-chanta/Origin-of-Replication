@@ -39,3 +39,12 @@ Note that L is usually 500 and k is usually 9 for bacterial genomes.
 replicatio("CGATGATGATGACGATGATG",3,12,2)
 ```
 {'TGA', 'GAT', 'ATG'}
+
+### 5. GC skew Identifier
+This algorithm starts from 0 and increase the value by 1 each time it hits a Guanine
+and decrease the value by 1 each time it hits a Cytosine resulting in a series of numbers
+showing the skew value at each genome location.
+```python
+GCskew("ATAATCGATGCTGCCGCTATCGTAAGTATTAGCTAG")
+```
+0 0 0 0 0 0 -1 0 0 0 1 0 0 1 0 -1 0 -1 -1 -1 -1 -2 -1 -1 -1 -1 0 0 0 0 0 0 1 0 0 0 1 
