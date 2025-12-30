@@ -85,3 +85,16 @@ def replicatio(seq, k, L, t):
         if count[right_entering] >= t:
             frequency.add(right_entering)
     return(frequency)
+# GC skew calculator     
+def GCskew(seq):
+    skew = 0
+    GC_skew_list = [0]
+
+    for base in seq:
+        if base == "G":
+            skew += 1
+        elif base == "C":
+            skew -= 1
+        GC_skew_list.append(skew)
+    for i in GC_skew_list:
+        print(i, end =" ")
