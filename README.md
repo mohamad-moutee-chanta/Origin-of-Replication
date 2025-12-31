@@ -43,7 +43,9 @@ replicatio("CGATGATGATGACGATGATG",3,12,2)
 ### 5. GC skew Identifier
 This algorithm starts from 0 and increase the value by 1 each time it hits a Guanine
 and decrease the value by 1 each time it hits a Cytosine resulting in a series of numbers
-showing the skew value at each genome location.
+showing the skew value at each genome location. The index of the base having the minimum
+value of GC skew is also presented which helps understand the direction of the replication
+and whether we are near the location of Ori or Ter.
 ```python
 GCskew("ATAATCGATGCTGCCGCTATCGTAAGTATTAGCTAG")
 ```
