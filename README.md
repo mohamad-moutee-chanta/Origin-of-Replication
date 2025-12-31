@@ -50,4 +50,5 @@ and whether we are near the location of Ori or Ter.
 GCskew("ATAATCGATGCTGCCGCTATCGTAAGTATTAGCTAGccc")
 ```
 0 0 0 0 0 0 -1 0 0 0 1 0 0 1 0 -1 0 -1 -1 -1 -1 -2 -1 -1 -1 -1 0 0 0 0 0 0 1 0 0 0 1 0 -1 -2
+
 Min GC skew indexes are: 21 39
