@@ -85,7 +85,8 @@ def replicatio(seq, k, L, t):
         if count[right_entering] >= t:
             frequency.add(right_entering)
     return(frequency)
-# GC skew calculator     
+    
+# Calcualte GC skew and find the index of the minimum value for the GC skew     
 def GCskew(seq):
     skew = 0
     GC_skew_list = [0]
@@ -96,5 +97,9 @@ def GCskew(seq):
         elif base == "C":
             skew -= 1
         GC_skew_list.append(skew)
-    for i in GC_skew_list:
-        print(i, end =" ")
+    print("GC skew is: ")
+    print(*GC_skew_list)
+    min_skew = min(GC_skew_list)
+    indexes = [i for i, value in enumerate(GC_skew_list) if value == min_skew]
+    print("Min GC skew indexes are: ")
+    print(*indexes)
