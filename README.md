@@ -47,6 +47,7 @@ showing the skew value at each genome location. The index of the base having the
 value of GC skew is also presented which helps understand the direction of the replication
 and whether we are near the location of Ori or Ter.
 ```python
-GCskew("ATAATCGATGCTGCCGCTATCGTAAGTATTAGCTAG")
+GCskew("ATAATCGATGCTGCCGCTATCGTAAGTATTAGCTAGccc")
 ```
-0 0 0 0 0 0 -1 0 0 0 1 0 0 1 0 -1 0 -1 -1 -1 -1 -2 -1 -1 -1 -1 0 0 0 0 0 0 1 0 0 0 1 
+0 0 0 0 0 0 -1 0 0 0 1 0 0 1 0 -1 0 -1 -1 -1 -1 -2 -1 -1 -1 -1 0 0 0 0 0 0 1 0 0 0 1 0 -1 -2
+Min GC skew indexes are: 21 39
