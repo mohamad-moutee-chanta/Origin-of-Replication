@@ -126,7 +126,7 @@ def ApproxPattern(pattern, seq, d):
   print(*index)
   occurances = len(index)
   print("The total number of fittig nucleotide base is: {}".format(occurances))
-  return count
+  return
 
 # Identify the "Neighbors" for each given "pattern" and a "d" value 
 # construct a neighborhood having all the neighbors 
