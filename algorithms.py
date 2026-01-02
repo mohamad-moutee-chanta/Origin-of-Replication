@@ -103,3 +103,97 @@ def GCskew(seq):
     indexes = [i for i, value in enumerate(GC_skew_list) if value == min_skew]
     print("Min GC skew indexes are: ")
     print(*indexes)
+
+# Calculate the Hamming Distance between two sequences
+def Hamming_Distance(A, B):
+  count = 0
+  for i in range(len(A)):
+    if A[i] != B[i]:
+        count += 1
+
+# Identify the indexes of a given pattern in a sequence for each "mismatch" having a variation/mutated nucleotide with a d parametre
+# for example if seq = ATGC, pattern = AG, and d = 1
+# the return of the function whould be TG with index of 1 (zero based indexing); telling us that there exist a pattern in the sequence 
+# which is different from the given pattern by 1 nucleotide 
+def ApproxPattern(pattern, seq, d):
+  index = []
+  k = len(pattern)
+  for i in range(len(seq) - k + 1):
+    splices = seq[i:i+k]
+    if Hamming_Distance(pattern, splices) <= d:
+      index.append(i)
+  print("indexes are: ")
+  print(*index)
+  occurances = len(index)
+  print("The total number of fittig nucleotide base is: {}".format(occurances))
+  return count
+
+# Identify the "Neighbors" for each given "pattern" and a "d" value 
+# construct a neighborhood having all the neighbors 
+def Neighbors(pattern, d):
+  if d == 0:
+    return {pattern}
+  if len(pattern) == 1:
+    return {"A", "C", "G", "T"}
+  neighborhood = set()
+  suffix_neighbors = Neighbors(pattern[1:], d)
+  for suffix in suffix_neighbors:
+    if Hamming_Distance(suffix, pattern[1:]) < d:
+      for Nucleotide in {"A", "T", "G", "C"}:
+        neighborhood.add(Nucleotide + suffix)
+    else:
+      neighborhood.add(pattern[0] + suffix)
+  print(*neighborhood)
+  return neighborhood
+
+# Generate the Reverse strand of a given DNA sequence 
+def ReverseDNA(seq):
+  pattern = seq[::-1]
+  pattern = pattern.replace("A", "t")
+  pattern = pattern.replace("T", "a")
+  pattern = pattern.replace("G", "c")
+  pattern = pattern.replace("C", "g")
+  pattern = pattern.upper()
+  return pattern
+
+
+# ONE OF THE MAIN FUNCTIONS IN THIS PROJECT 
+# given a sequence (seq) a k-mer value (k which is any number specified) and a nucleotide mutation value, can be set to zero if wanted,(d)
+# The function returns the pattern which satisfies these conditions, has the maximum amount of appearance in the sequence and has its reverse
+# This is crucial for DNAA box identification which triggers the initiation of the replication.
+def kmer_with_d(seq, k, d):
+  pattern_counts = {}
+
+  for i in range(len(seq) - k + 1):
+    kmer = seq[i:i+k]
+    neighbors = Neighbors(kmer, d)
+    for neighbor in neighbors:
+      if neighbor not in pattern_counts:
+        pattern_counts[neighbor] = 1
+      else:
+        pattern_counts[neighbor] += 1
+
+  count_final = {}
+
+  for pattern in pattern_counts:
+    rev_seq = ReverseDNA(pattern)
+
+    count_normal = pattern_counts[pattern]
+    count_reverse = pattern_counts.get(rev_seq,0) # set at zero if not existing
+
+    total_count = count_normal + count_reverse
+    count_final[pattern] = total_count 
+    count_final[rev_seq] = total_count
+
+  max_count = 0
+  results = []
+
+  for pattern, count in count_final.items():
+    if count > max_count:
+      max_count = count
+      results = [pattern]
+    elif count == max_count:
+      results.append(pattern)
+
+  print(*results)
+  return 
