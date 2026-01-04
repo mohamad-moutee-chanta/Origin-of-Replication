@@ -197,3 +197,34 @@ def kmer_with_d(seq, k, d):
 
   print(*results)
   return 
+
+def MotifEnumeration(seq, k, d):
+  patterns = set() # set to handle the duplciates
+
+  def ApproxPattern2(pattern, seq, d):
+    count = 0
+    k = len(pattern)
+
+    for i in range(len(seq) - k + 1):
+      splices = seq[i:i+k]
+      if Hamming_Distance(pattern, splices) <= d:
+        count += 1
+    return count
+
+  first_seq = seq.partition(" ")[0]
+  rest_seq = seq.partition(" ")[2]
+
+  for i in range(len(first_seq) - k + 1):
+    kmer = first_seq[i:i+k]
+    neighbors_first_Seq = Neighbors(kmer, d)
+
+    for potential in neighbors_first_Seq:
+      motif = True
+      for seqs in rest_seq.split():
+        if not ApproxPattern2(potential, seqs, d) > 0:
+          motif = False
+          break
+      if motif:
+        patterns.add(potential)
+
+  return " ".join(patterns)
