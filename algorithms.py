@@ -228,3 +228,44 @@ def MotifEnumeration(seq, k, d):
         patterns.add(potential)
 
   return " ".join(patterns)
+
+filename = input("Enter the name of your file: ")
+
+with open(filename, "r") as f:
+  lines = f.readlines()
+
+seq = lines[0].strip()
+k = int(lines[1].strip())
+
+profile_matrix = []
+for i in range(2, 6):
+  row = lines[i].strip().split()
+  row_float = [float(x) for x in row]
+  profile_matrix.append(row_float)
+
+print("\nThe profile matrix is: {}".format(profile_matrix))
+print("\nSequence is: {}".format(seq))
+print("\nk-mer is: {}".format(k))
+
+def ProbFunction(k_mer, p_matrix):
+  probability = 1
+
+  map = {"A": 0, "C": 1, "G": 2, "T": 3}
+  for a in range(len(k_mer)):
+    letter = k_mer[a]
+    row = map[letter]
+    probability *= profile_matrix[row][a]
+  return probability
+
+max_prob = -1
+best_kmer = seq[0:k] # start at the first kmer
+
+for i in range(len(seq) - k + 1):
+  kmer = seq[i:i+k]
+
+  probability = ProbFunction(kmer, profile_matrix)
+
+  if probability > max_prob:
+    max_prob = probability
+    best_kmer = kmer
+print("\nBest matching k-mer is : {}".format(best_kmer))
